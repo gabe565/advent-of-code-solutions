@@ -4,6 +4,15 @@ run:
 issues:
   max-same-issues: 50
 
+linters-settings:
+  ireturn:
+    allow:
+      - anon
+      - error
+      - empty
+      - stdlib
+      - generic
+
 linters:
   enable:
     - asasalint
