@@ -4,7 +4,8 @@ import (
 	"bytes"
 	"fmt"
 	"slices"
-	"strconv"
+
+	"github.com/gabe565/advent-of-code-2023/internal/util"
 )
 
 type Card struct {
@@ -28,26 +29,14 @@ func (c *Card) UnmarshalText(text []byte) error {
 		return fmt.Errorf("invalid numbers spec: %s", numbersSpec)
 	}
 
-	winningSpec = bytes.TrimSpace(winningSpec)
-	for _, v := range bytes.Split(winningSpec, []byte(" ")) {
-		if len(v) != 0 {
-			v, err := strconv.Atoi(string(v))
-			if err != nil {
-				return err
-			}
-			c.Winning = append(c.Winning, v)
-		}
+	var err error
+
+	if c.Winning, err = util.StringToIntSlice(string(winningSpec), " "); err != nil {
+		return err
 	}
 
-	valuesSpec = bytes.TrimSpace(valuesSpec)
-	for _, v := range bytes.Split(valuesSpec, []byte(" ")) {
-		if len(v) != 0 {
-			v, err := strconv.Atoi(string(v))
-			if err != nil {
-				return err
-			}
-			c.Values = append(c.Values, v)
-		}
+	if c.Values, err = util.StringToIntSlice(string(valuesSpec), " "); err != nil {
+		return err
 	}
 
 	return nil
