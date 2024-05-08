@@ -2,9 +2,10 @@ package day5
 
 import (
 	"bytes"
+	"cmp"
 	"errors"
 	"fmt"
-	"math"
+	"slices"
 
 	"github.com/gabe565/advent-of-code-2023/internal/util"
 )
@@ -56,28 +57,59 @@ func (a *Almanac) Locations() []int {
 }
 
 func (a *Almanac) MinLocationRange() int {
-	result := math.MaxInt64
-	for _, seedRange := range a.SeedRanges() {
-		for i := range seedRange.Len {
-			if location := a.Transform(i + seedRange.Start); location < result {
-				result = location
+	seeds := a.SeedRanges()
+	for _, m := range a.Maps {
+		for _, rule := range m.Rules {
+			for i, seed := range seeds {
+				if seed.End <= rule.Start || rule.End <= seed.Start {
+					// Seed and rule are disjoint
+					continue
+				}
+
+				if seed.Start <= rule.Start {
+					// Seed overlaps rule start. Seed is split at rule start.
+					seeds = append(seeds, SeedRange{
+						Start: seed.Start,
+						End:   rule.Start - 1,
+					})
+					seed.Start = rule.Start
+				}
+
+				if seed.End > rule.End {
+					// Seed overlaps rule end. Seed is split at rule end.
+					seeds = append(seeds, SeedRange{
+						Start: rule.End,
+						End:   seed.End - 1,
+					})
+					seed.End = rule.End
+				}
+
+				// Seed within rule. Seed is translated.
+				seed.Start += rule.Diff
+				seed.End += rule.Diff
+				seeds[i] = seed
 			}
 		}
 	}
-	return result
+
+	return slices.MinFunc(seeds, func(a, b SeedRange) int {
+		return cmp.Compare(a.Start, b.Start)
+	}).Start
 }
 
 func (a *Almanac) SeedRanges() []SeedRange {
 	ranges := make([]SeedRange, 0, len(a.Seeds)/2)
 	for i := 0; i < len(a.Seeds); i += 2 {
-		ranges = append(ranges, SeedRange{a.Seeds[i], a.Seeds[i+1]})
+		ranges = append(ranges, SeedRange{
+			Start: a.Seeds[i],
+			End:   a.Seeds[i] + a.Seeds[i+1],
+		})
 	}
 	return ranges
 }
 
 type SeedRange struct {
-	Start int
-	Len   int
+	Start, End int
 }
 
 type Map struct {
@@ -114,19 +146,20 @@ func (m *Map) Transform(a int) int {
 }
 
 type Rule struct {
-	Destination int
-	Source      int
-	Len         int
+	Start, End, Diff int
 }
 
 func (r *Rule) UnmarshalText(text []byte) error {
-	_, err := fmt.Sscanf(string(text), "%d %d %d", &r.Destination, &r.Source, &r.Len)
+	var dest, count int
+	_, err := fmt.Sscanf(string(text), "%d %d %d", &dest, &r.Start, &count)
+	r.End = r.Start + count
+	r.Diff = dest - r.Start
 	return err
 }
 
 func (r *Rule) Transform(i int) int {
-	if r.Source <= i && i < r.Source+r.Len {
-		return i + r.Destination - r.Source
+	if r.Start <= i && i < r.End {
+		return i + r.Diff
 	}
 	return i
 }
