@@ -11,8 +11,8 @@ import (
 )
 
 type Result struct {
-	Sum   int `toml:"sum"`
-	Ratio int `toml:"ratio"`
+	Part1 int `toml:"part1"`
+	Part2 int `toml:"part2"`
 }
 
 func New() *cobra.Command {
@@ -83,7 +83,7 @@ func run(cmd *cobra.Command, _ []string) error {
 							realY := y - 1 + ay
 							for _, n := range numbers {
 								if realX == n.X && realY >= n.Y && realY <= n.Y+n.Len {
-									result.Sum += n.Value
+									result.Part1 += n.Value
 									skip = n.Y - realY + n.Len - 1
 									if computeRatio {
 										localMatches = append(localMatches, n.Value)
@@ -91,7 +91,7 @@ func run(cmd *cobra.Command, _ []string) error {
 								}
 							}
 							if len(localMatches) == 2 {
-								result.Ratio += localMatches[0] * localMatches[1]
+								result.Part2 += localMatches[0] * localMatches[1]
 							}
 						}
 					}

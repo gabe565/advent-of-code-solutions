@@ -9,8 +9,8 @@ import (
 )
 
 type Result struct {
-	Individual int `toml:"individual"`
-	Ranges     int `toml:"ranges"`
+	Part1 int `toml:"part1"`
+	Part2 int `toml:"part2"`
 }
 
 func New() *cobra.Command {
@@ -34,8 +34,8 @@ func run(cmd *cobra.Command, _ []string) error {
 	}
 
 	result := Result{
-		Individual: slices.Min(almanac.Locations()),
-		Ranges:     almanac.MinLocationRange(),
+		Part1: slices.Min(almanac.Locations()),
+		Part2: almanac.MinLocationRange(),
 	}
 
 	return toml.NewEncoder(cmd.OutOrStdout()).Encode(result)

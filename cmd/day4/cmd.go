@@ -9,8 +9,8 @@ import (
 )
 
 type Result struct {
-	Points int `toml:"points"`
-	Cards  int `toml:"cards"`
+	Part1 int `toml:"part1"`
+	Part2 int `toml:"part2"`
 }
 
 func New() *cobra.Command {
@@ -36,9 +36,9 @@ func run(cmd *cobra.Command, _ []string) error {
 		return scan.Err()
 	}
 
-	result := Result{Cards: cards.Winning()}
+	result := Result{Part2: cards.Winning()}
 	for _, card := range cards.Cards {
-		result.Points += card.Points()
+		result.Part1 += card.Points()
 	}
 
 	return toml.NewEncoder(cmd.OutOrStdout()).Encode(result)

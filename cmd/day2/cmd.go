@@ -9,8 +9,8 @@ import (
 )
 
 type Result struct {
-	Sum   int `toml:"sum"`
-	Power int `toml:"power"`
+	Part1 int `toml:"part1"`
+	Part2 int `toml:"part2"`
 }
 
 func New() *cobra.Command {
@@ -38,9 +38,9 @@ func run(cmd *cobra.Command, _ []string) error {
 
 	var result Result
 	for _, game := range games {
-		result.Power += game.Power()
+		result.Part2 += game.Power()
 		if game.Valid() {
-			result.Sum += game.ID
+			result.Part1 += game.ID
 		}
 	}
 

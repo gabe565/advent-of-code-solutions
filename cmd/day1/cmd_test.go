@@ -3,7 +3,6 @@ package day1
 import (
 	"bytes"
 	_ "embed"
-	"strconv"
 	"testing"
 
 	"github.com/pelletier/go-toml/v2"
@@ -14,11 +13,11 @@ import (
 //go:embed example_p1.txt
 var exampleP1 []byte
 
-//go:embed input.txt
-var input []byte
-
 //go:embed example_p2.txt
 var exampleP2 []byte
+
+//go:embed input.txt
+var input []byte
 
 func Test_run(t *testing.T) {
 	t.Parallel()
@@ -32,10 +31,9 @@ func Test_run(t *testing.T) {
 		want    Result
 		wantErr require.ErrorAssertionFunc
 	}{
-		{"example p1", args{exampleP1, false}, Result{142}, require.NoError},
-		{"input p1", args{input, false}, Result{54990}, require.NoError},
-		{"example p2", args{exampleP2, true}, Result{281}, require.NoError},
-		{"input p2", args{input, true}, Result{54473}, require.NoError},
+		{"example p1", args{exampleP1, false}, Result{142, 142}, require.NoError},
+		{"example p2", args{exampleP2, true}, Result{209, 281}, require.NoError},
+		{"input", args{input, false}, Result{54990, 54473}, require.NoError},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -44,7 +42,6 @@ func Test_run(t *testing.T) {
 			cmd.SetIn(bytes.NewReader(tt.args.input))
 			var buf bytes.Buffer
 			cmd.SetOut(&buf)
-			require.NoError(t, cmd.Flags().Set("spelled", strconv.FormatBool(tt.args.spelled)))
 
 			tt.wantErr(t, run(cmd, nil))
 			var got Result

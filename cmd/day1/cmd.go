@@ -9,7 +9,8 @@ import (
 )
 
 type Result struct {
-	Sum int `toml:"sum"`
+	Part1 int `toml:"part1"`
+	Part2 int `toml:"part2"`
 }
 
 func New() *cobra.Command {
@@ -18,15 +19,10 @@ func New() *cobra.Command {
 		Short: "Day 1",
 		RunE:  run,
 	}
-	cmd.Flags().Bool("spelled", false, "Include spelled numbers")
 	return cmd
 }
 
 func run(cmd *cobra.Command, _ []string) error {
-	spelled, err := cmd.Flags().GetBool("spelled")
-	if err != nil {
-		return err
-	}
 	replacer := strings.NewReplacer(
 		"one", "o1e",
 		"two", "t2o",
@@ -43,35 +39,40 @@ func run(cmd *cobra.Command, _ []string) error {
 	scan := bufio.NewScanner(cmd.InOrStdin())
 	for scan.Scan() {
 		line := scan.Text()
-		if spelled {
-			for {
-				newline := replacer.Replace(line)
-				if line == newline {
-					break
-				}
-				line = newline
+		spelledLine := line
+		for {
+			replaced := replacer.Replace(spelledLine)
+			if spelledLine == replaced {
+				break
 			}
+			spelledLine = replaced
 		}
 
-		var first *int
-		var second int
-		for _, b := range []byte(line) {
-			if b >= '0' && b <= '9' {
-				i := int(b - '0')
-				if first == nil {
-					first = &i
-				}
-				second = i
-			}
-		}
-
-		if first != nil {
-			result.Sum += 10*(*first) + second
-		}
+		result.Part1 += findFirstLast(line)
+		result.Part2 += findFirstLast(spelledLine)
 	}
 	if scan.Err() != nil {
 		return scan.Err()
 	}
 
 	return toml.NewEncoder(cmd.OutOrStdout()).Encode(result)
+}
+
+func findFirstLast(line string) int {
+	var first *int
+	var second int
+	for _, b := range []byte(line) {
+		if b >= '0' && b <= '9' {
+			i := int(b - '0')
+			if first == nil {
+				first = &i
+			}
+			second = i
+		}
+	}
+
+	if first == nil {
+		return 0
+	}
+	return 10*(*first) + second
 }
