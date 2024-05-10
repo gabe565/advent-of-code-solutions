@@ -1,10 +1,11 @@
 package day5
 
 import (
+	"bufio"
 	"bytes"
 	"cmp"
-	"errors"
 	"fmt"
+	"io"
 	"slices"
 
 	"github.com/gabe565/advent-of-code-2023/internal/util"
@@ -15,30 +16,33 @@ type Almanac struct {
 	Maps  []Map
 }
 
-func (a *Almanac) UnmarshalText(text []byte) error {
-	blocks := bytes.Split(text, []byte("\n\n"))
-	if len(blocks) == 0 {
-		return errors.New("invalid input")
-	}
-
-	if !bytes.HasPrefix(blocks[0], []byte("seeds: ")) {
-		return fmt.Errorf("invalid seeds line: %q", string(blocks[0]))
-	}
-	blocks[0] = bytes.TrimPrefix(blocks[0], []byte("seeds: "))
+func (a *Almanac) Decode(r io.Reader) error {
+	scanner := bufio.NewScanner(r)
 	var err error
-	a.Seeds, err = util.StringToIntSlice(string(blocks[0]), " ")
-	if err != nil {
-		return err
-	}
-
-	for _, block := range blocks[1:] {
-		var m Map
-		if err := m.UnmarshalText(block); err != nil {
-			return err
+	var block []byte
+	for i := 0; scanner.Scan(); i++ {
+		if i == 0 {
+			line := bytes.TrimPrefix(scanner.Bytes(), []byte("seeds: "))
+			if a.Seeds, err = util.StringToIntSlice(string(line), " "); err != nil {
+				return err
+			}
+		} else {
+			if scanner.Text() == "" && len(block) != 0 {
+				var m Map
+				if err := m.UnmarshalText(block); err != nil {
+					return err
+				}
+				a.Maps = append(a.Maps, m)
+				block = block[:0]
+			} else {
+				if len(block) != 0 {
+					block = append(block, '\n')
+				}
+				block = append(block, scanner.Bytes()...)
+			}
 		}
-		a.Maps = append(a.Maps, m)
 	}
-	return nil
+	return scanner.Err()
 }
 
 func (a *Almanac) Transform(i int) int {

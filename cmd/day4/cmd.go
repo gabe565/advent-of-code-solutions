@@ -1,9 +1,6 @@
 package day4
 
 import (
-	"bufio"
-	"fmt"
-
 	"github.com/pelletier/go-toml/v2"
 	"github.com/spf13/cobra"
 )
@@ -24,20 +21,12 @@ func New() *cobra.Command {
 
 func run(cmd *cobra.Command, _ []string) error {
 	var cards Cards
-	scan := bufio.NewScanner(cmd.InOrStdin())
-	for i := 0; scan.Scan(); i++ {
-		var card Card
-		if err := card.UnmarshalText(scan.Bytes()); err != nil {
-			return fmt.Errorf("failed to unmarshal card %d: %w", i, err)
-		}
-		cards.Cards = append(cards.Cards, card)
-	}
-	if scan.Err() != nil {
-		return scan.Err()
+	if err := cards.Decode(cmd.InOrStdin()); err != nil {
+		return err
 	}
 
 	result := Result{Part2: cards.Winning()}
-	for _, card := range cards.Cards {
+	for _, card := range cards {
 		result.Part1 += card.Points()
 	}
 

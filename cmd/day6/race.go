@@ -1,9 +1,11 @@
 package day6
 
 import (
+	"bufio"
 	"bytes"
 	"errors"
-	"fmt"
+	"io"
+	"slices"
 	"strconv"
 
 	"github.com/gabe565/advent-of-code-2023/internal/util"
@@ -16,15 +18,17 @@ type Race struct {
 
 var ErrInvalidInput = errors.New("invalid input")
 
-func (r *Race) UnmarshalText(text []byte) error {
-	timeLine, recordLine, ok := bytes.Cut(text, []byte("\n"))
-	if !ok {
-		return fmt.Errorf("%w: %s", ErrInvalidInput, string(text))
+func (r *Race) Decode(rd io.Reader) error {
+	scanner := bufio.NewScanner(rd)
+	for i := 0; scanner.Scan(); i++ {
+		switch i {
+		case 0:
+			r.Time = slices.Clone(bytes.TrimSpace(bytes.TrimPrefix(scanner.Bytes(), []byte("Time:"))))
+		case 1:
+			r.Record = slices.Clone(bytes.TrimSpace(bytes.TrimPrefix(scanner.Bytes(), []byte("Distance:"))))
+		}
 	}
-
-	r.Time = bytes.TrimSpace(bytes.TrimPrefix(timeLine, []byte("Time:")))
-	r.Record = bytes.TrimSpace(bytes.TrimPrefix(recordLine, []byte("Distance:")))
-	return nil
+	return scanner.Err()
 }
 
 func (r *Race) Part1() (int, error) {

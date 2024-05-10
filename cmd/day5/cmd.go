@@ -1,7 +1,6 @@
 package day5
 
 import (
-	"io"
 	"slices"
 
 	"github.com/pelletier/go-toml/v2"
@@ -23,13 +22,8 @@ func New() *cobra.Command {
 }
 
 func run(cmd *cobra.Command, _ []string) error {
-	b, err := io.ReadAll(cmd.InOrStdin())
-	if err != nil {
-		return err
-	}
-
 	var almanac Almanac
-	if err := almanac.UnmarshalText(b); err != nil {
+	if err := almanac.Decode(cmd.InOrStdin()); err != nil {
 		return err
 	}
 

@@ -1,8 +1,6 @@
 package day6
 
 import (
-	"io"
-
 	"github.com/pelletier/go-toml/v2"
 	"github.com/spf13/cobra"
 )
@@ -22,17 +20,13 @@ func New() *cobra.Command {
 }
 
 func run(cmd *cobra.Command, _ []string) error {
-	b, err := io.ReadAll(cmd.InOrStdin())
-	if err != nil {
-		return err
-	}
-
 	var race Race
-	if err := race.UnmarshalText(b); err != nil {
+	if err := race.Decode(cmd.InOrStdin()); err != nil {
 		return err
 	}
 
 	var result Result
+	var err error
 	if result.Part1, err = race.Part1(); err != nil {
 		return err
 	}
