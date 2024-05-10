@@ -28,3 +28,13 @@ func StringToIntSlice(s string, sep string) ([]int, error) {
 	}
 	return result, nil
 }
+
+func Count[T comparable](s []T, search T) int {
+	var count int
+	for _, v := range s {
+		if v == search {
+			count++
+		}
+	}
+	return count
+}
