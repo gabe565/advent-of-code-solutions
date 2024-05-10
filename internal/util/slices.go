@@ -4,12 +4,22 @@ import (
 	"cmp"
 	"strconv"
 	"strings"
+
+	"golang.org/x/exp/constraints"
 )
 
 func Sum[S ~[]E, E cmp.Ordered](s S) E {
 	var result E
 	for _, v := range s {
 		result += v
+	}
+	return result
+}
+
+func Multiply[S ~[]E, E constraints.Integer | constraints.Float](s S) E {
+	result := E(1)
+	for _, v := range s {
+		result *= v
 	}
 	return result
 }
