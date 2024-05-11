@@ -9,6 +9,7 @@ import (
 	"github.com/gabe565/advent-of-code-2023/cmd/day6"
 	"github.com/gabe565/advent-of-code-2023/cmd/day7"
 	"github.com/gabe565/advent-of-code-2023/cmd/day8"
+	"github.com/gabe565/advent-of-code-2023/cmd/day9"
 	"github.com/spf13/cobra"
 )
 
@@ -25,6 +26,7 @@ func New() *cobra.Command {
 		day6.New(),
 		day7.New(),
 		day8.New(),
+		day9.New(),
 	)
 	return cmd
 }
