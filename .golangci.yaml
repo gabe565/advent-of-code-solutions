@@ -20,13 +20,13 @@ linters:
     - bidichk
     - bodyclose
     - copyloopvar
+    - copyloopvar
     - decorder
     - dupl
     - durationcheck
     - errcheck
     - errname
     - errorlint
-    - exportloopref
     - gci
     - ginkgolinter
     - gocheckcompilerdirectives
