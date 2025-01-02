@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/gabe565/advent-of-code-2023/cmd"
+	"github.com/gabe565/advent-of-code-solutions/cmd"
 )
 
 func main() {

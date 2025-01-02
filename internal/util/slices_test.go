@@ -9,14 +9,13 @@ import (
 )
 
 func TestSum(t *testing.T) {
-	t.Parallel()
-	type args[E cmp.Ordered] struct {
-		s []E
+	type args[T cmp.Ordered] struct {
+		s []T
 	}
-	type testCase[E cmp.Ordered] struct {
+	type testCase[T cmp.Ordered] struct {
 		name string
-		args args[E]
-		want E
+		args args[T]
+		want T
 	}
 	tests := []testCase[int]{
 		{"empty", args[int]{[]int{}}, 0},
@@ -24,14 +23,12 @@ func TestSum(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			t.Parallel()
 			assert.Equal(t, tt.want, Sum(tt.args.s))
 		})
 	}
 }
 
 func TestStringToIntSlice(t *testing.T) {
-	t.Parallel()
 	type args struct {
 		s   string
 		sep string
@@ -50,7 +47,6 @@ func TestStringToIntSlice(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			t.Parallel()
 			got, err := StringToIntSlice(tt.args.s, tt.args.sep)
 			tt.wantErr(t, err)
 			assert.Equal(t, tt.want, got)

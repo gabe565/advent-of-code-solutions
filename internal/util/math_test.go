@@ -9,15 +9,14 @@ import (
 )
 
 func TestGCD(t *testing.T) {
-	t.Parallel()
-	type args[E constraints.Integer] struct {
-		a E
-		b E
+	type args[T constraints.Integer] struct {
+		a T
+		b T
 	}
-	type testCase[E constraints.Integer] struct {
+	type testCase[T constraints.Integer] struct {
 		name string
-		args args[E]
-		want E
+		args args[T]
+		want T
 	}
 	tests := []testCase[int]{
 		{"2 4", args[int]{2, 4}, 2},
@@ -26,21 +25,19 @@ func TestGCD(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			t.Parallel()
 			assert.Equal(t, tt.want, GCD(tt.args.a, tt.args.b))
 		})
 	}
 }
 
 func TestLCM(t *testing.T) {
-	t.Parallel()
-	type args[E constraints.Integer] struct {
-		n []E
+	type args[T constraints.Integer] struct {
+		n []T
 	}
-	type testCase[E constraints.Integer] struct {
+	type testCase[T constraints.Integer] struct {
 		name    string
-		args    args[E]
-		want    E
+		args    args[T]
+		want    T
 		wantErr require.ErrorAssertionFunc
 	}
 	tests := []testCase[int]{
@@ -54,7 +51,6 @@ func TestLCM(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			t.Parallel()
 			got, err := LCM(tt.args.n...)
 			tt.wantErr(t, err)
 			assert.Equal(t, tt.want, got)

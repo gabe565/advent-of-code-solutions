@@ -8,8 +8,8 @@ import (
 	"golang.org/x/exp/constraints"
 )
 
-func Sum[S ~[]E, E cmp.Ordered](s S) E {
-	var result E
+func Sum[S ~[]T, T cmp.Ordered](s S) T {
+	var result T
 	for _, v := range s {
 		result += v
 	}

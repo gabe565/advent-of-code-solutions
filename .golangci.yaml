@@ -5,6 +5,8 @@ issues:
   max-same-issues: 50
 
 linters-settings:
+  gosmopolitan:
+    allow-time-local: true
   ireturn:
     allow:
       - anon
@@ -64,7 +66,6 @@ linters:
     - nolintlint
     - nonamedreturns
     - nosprintfhostport
-    - paralleltest
     - perfsprint
     - prealloc
     - predeclared

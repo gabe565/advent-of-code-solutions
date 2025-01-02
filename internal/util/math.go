@@ -6,7 +6,7 @@ import (
 	"golang.org/x/exp/constraints"
 )
 
-func GCD[E constraints.Integer](a, b E) E {
+func GCD[T constraints.Integer](a, b T) T {
 	for b != 0 {
 		a, b = b, a%b
 	}
@@ -15,7 +15,7 @@ func GCD[E constraints.Integer](a, b E) E {
 
 var ErrLCMArgs = errors.New("LCM requires at least two arguments")
 
-func LCM[E constraints.Integer](n ...E) (E, error) {
+func LCM[T constraints.Integer](n ...T) (T, error) {
 	if len(n) < 2 {
 		return 0, ErrLCMArgs
 	}
