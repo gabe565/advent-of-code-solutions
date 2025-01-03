@@ -6,7 +6,7 @@ require (
 	gabe565.com/utils v0.0.0-20241213205714-152b8de1d3fe
 	github.com/dmarkham/enumer v1.5.10
 	github.com/spf13/cobra v1.8.1
-	github.com/stretchr/testify v1.9.0
+	github.com/stretchr/testify v1.10.0
 	golang.org/x/exp v0.0.0-20241217172543-b2144cdd0a67
 )
 
