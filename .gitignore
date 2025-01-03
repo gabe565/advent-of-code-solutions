@@ -1,3 +1,4 @@
 *.txt
+!*.enc.txt
 .idea/
 advent-of-code-solutions
