@@ -7,18 +7,19 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/gabe565/advent-of-code-solutions/inputs"
 	"github.com/spf13/cobra"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
-//go:embed example.txt
-var example []byte
-
-//go:embed input.txt
-var input []byte
-
 func TestSolution(t *testing.T) {
+	example, err := inputs.FS.ReadFile("2023/4/example.txt")
+	require.NoError(t, err)
+
+	input, err := inputs.FS.ReadFile("2023/4/input.txt")
+	require.NoError(t, err)
+
 	day := New()
 	type args struct {
 		input []byte
