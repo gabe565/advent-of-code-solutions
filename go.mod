@@ -7,7 +7,7 @@ require (
 	github.com/dmarkham/enumer v1.5.10
 	github.com/spf13/cobra v1.8.1
 	github.com/stretchr/testify v1.9.0
-	golang.org/x/exp v0.0.0-20241217172543-b2144cdd0a67
+	golang.org/x/exp v0.0.0-20250103183323-7d7fa50e5329
 )
 
 require (
