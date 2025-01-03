@@ -6,3 +6,11 @@ repos:
       - id: golangci-lint-mod
         args: [--fix]
       - id: go-test-mod
+
+  - repo: local
+    hooks:
+      - id: encrypt-inputs
+        name: encrypt-inputs
+        entry: ./hack/encrypt-inputs.sh
+        language: system
+        pass_filenames: false

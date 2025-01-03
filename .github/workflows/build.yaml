@@ -7,18 +7,8 @@ jobs:
     name: Lint
     runs-on: ubuntu-24.04
     steps:
-      - name: Generate Token
-        id: app-token
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: ${{ secrets.BOT_APP_ID }}
-          private-key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
-          repositories: advent-of-code-solutions,advent-of-code-inputs
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          submodules: true
-          token: ${{ steps.app-token.outputs.token }}
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
@@ -31,22 +21,18 @@ jobs:
     name: Test
     runs-on: ubuntu-24.04
     steps:
-      - name: Generate Token
-        id: app-token
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: ${{ secrets.BOT_APP_ID }}
-          private-key: ${{ secrets.BOT_APP_PRIVATE_KEY }}
-          repositories: advent-of-code-solutions,advent-of-code-inputs
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          submodules: true
-          token: ${{ steps.app-token.outputs.token }}
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
+      - name: Sops Binary Installer
+        uses: mdgreenwald/mozilla-sops-action@v1.6.0
+      - name: Decrypt inputs
+        env:
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+        run: ./hack/decrypt-inputs.sh
       - name: Test
         run: go test ./...
 
