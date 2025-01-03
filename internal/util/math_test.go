@@ -57,3 +57,46 @@ func TestLCM(t *testing.T) {
 		})
 	}
 }
+
+func TestAbs(t *testing.T) {
+	type args[T constraints.Signed | constraints.Float] struct {
+		x T
+	}
+	type testCase[T constraints.Signed | constraints.Float] struct {
+		name string
+		args args[T]
+		want T
+	}
+	tests := []testCase[int]{
+		{"positive", args[int]{1}, 1},
+		{"negative", args[int]{-1}, 1},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equal(t, tt.want, Abs(tt.args.x))
+		})
+	}
+}
+
+func TestPow(t *testing.T) {
+	type args[T constraints.Integer | constraints.Float] struct {
+		x T
+		y T
+	}
+	type testCase[T constraints.Integer | constraints.Float] struct {
+		name string
+		args args[T]
+		want T
+	}
+	tests := []testCase[int]{
+		{"2^2", args[int]{2, 2}, 4},
+		{"2^10", args[int]{2, 10}, 1024},
+		{"4^4", args[int]{4, 4}, 256},
+		{"4^10", args[int]{4, 10}, 1048576},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			assert.Equal(t, tt.want, Pow(tt.args.x, tt.args.y))
+		})
+	}
+}
