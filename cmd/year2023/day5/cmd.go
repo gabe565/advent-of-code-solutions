@@ -3,14 +3,14 @@ package day5
 import (
 	"io"
 	"slices"
-	"time"
 
 	"github.com/gabe565/advent-of-code-solutions/internal/day"
 )
 
 func New() *day.Day[*Almanac, int] {
 	return &day.Day[*Almanac, int]{
-		Date: time.Date(2023, 12, 5, 0, 0, 0, 0, time.Local),
+		Year: 2023,
+		Day:  5,
 		Parse: func(r io.Reader) (*Almanac, error) {
 			var almanac Almanac
 			err := almanac.Decode(r)

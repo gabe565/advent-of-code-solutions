@@ -4,14 +4,14 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"time"
 
 	"github.com/gabe565/advent-of-code-solutions/internal/day"
 )
 
 func New() *day.Day[[]Game, int] {
 	return &day.Day[[]Game, int]{
-		Date: time.Date(2023, 12, 2, 0, 0, 0, 0, time.Local),
+		Year: 2023,
+		Day:  2,
 		Parse: func(r io.Reader) ([]Game, error) {
 			var games []Game
 			scanner := bufio.NewScanner(r)

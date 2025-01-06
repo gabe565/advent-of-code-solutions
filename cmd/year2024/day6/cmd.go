@@ -6,14 +6,14 @@ import (
 	"io"
 	"slices"
 	"strings"
-	"time"
 
 	"github.com/gabe565/advent-of-code-solutions/internal/day"
 )
 
 func New() day.Day[*Map, int] {
 	return day.Day[*Map, int]{
-		Date: time.Date(2024, 12, 6, 0, 0, 0, 0, time.Local),
+		Year: 2024,
+		Day:  6,
 		Parse: func(r io.Reader) (*Map, error) {
 			b, err := io.ReadAll(r)
 			if err != nil {

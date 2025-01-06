@@ -5,6 +5,7 @@ import (
 	"io"
 	"log/slog"
 	"os"
+	"strconv"
 	"time"
 
 	"gabe565.com/utils/termx"
@@ -14,7 +15,8 @@ import (
 type PartFunc[In, Out any] func(input In) (Out, error)
 
 type Day[In, Out any] struct {
-	Date  time.Time
+	Year  int
+	Day   int
 	Parse func(r io.Reader) (In, error)
 	Part1 PartFunc[In, Out]
 	Part2 PartFunc[In, Out]
@@ -22,10 +24,12 @@ type Day[In, Out any] struct {
 
 func (d Day[In, Out]) Cmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     d.Date.Format("02"),
-		Short:   "Solutions for " + d.Date.Format(time.DateOnly),
-		Args:    cobra.MaximumNArgs(1),
-		Aliases: []string{d.Date.Format("2")},
+		Use:   fmt.Sprintf("%02d", d.Day),
+		Short: "Solutions for day " + strconv.Itoa(d.Day),
+		Args:  cobra.MaximumNArgs(1),
+	}
+	if d.Day < 10 {
+		cmd.Aliases = []string{strconv.Itoa(d.Day)}
 	}
 	if d.Part1 != nil {
 		cmd.AddCommand(d.Part1Cmd())

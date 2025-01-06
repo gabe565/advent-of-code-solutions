@@ -5,7 +5,6 @@ import (
 	"io"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/gabe565/advent-of-code-solutions/internal/day"
 	"github.com/gabe565/advent-of-code-solutions/internal/util"
@@ -14,7 +13,8 @@ import (
 
 func New() day.Day[[][]int, int] {
 	return day.Day[[][]int, int]{
-		Date: time.Date(2024, 12, 1, 0, 0, 0, 0, time.Local),
+		Year: 2024,
+		Day:  1,
 		Parse: func(r io.Reader) ([][]int, error) {
 			input := make([][]int, 2)
 			scanner := bufio.NewScanner(r)

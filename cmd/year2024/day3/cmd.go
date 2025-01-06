@@ -4,14 +4,14 @@ import (
 	"io"
 	"regexp"
 	"strconv"
-	"time"
 
 	"github.com/gabe565/advent-of-code-solutions/internal/day"
 )
 
 func New() day.Day[[]byte, int] {
 	return day.Day[[]byte, int]{
-		Date:  time.Date(2024, 12, 3, 0, 0, 0, 0, time.Local),
+		Year:  2024,
+		Day:   3,
 		Parse: io.ReadAll,
 		Part1: func(input []byte) (int, error) {
 			re := regexp.MustCompile(`mul\((\d+),(\d+)\)`)

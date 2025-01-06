@@ -5,14 +5,14 @@ import (
 	"io"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/gabe565/advent-of-code-solutions/internal/day"
 )
 
 func New() day.Day[[]Calibration, int] {
 	return day.Day[[]Calibration, int]{
-		Date: time.Date(2024, 12, 7, 0, 0, 0, 0, time.Local),
+		Year: 2024,
+		Day:  7,
 		Parse: func(r io.Reader) ([]Calibration, error) {
 			scanner := bufio.NewScanner(r)
 			var calibrations []Calibration

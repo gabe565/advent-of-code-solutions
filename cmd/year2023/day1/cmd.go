@@ -4,14 +4,14 @@ import (
 	"bytes"
 	"io"
 	"strings"
-	"time"
 
 	"github.com/gabe565/advent-of-code-solutions/internal/day"
 )
 
 func New() *day.Day[[]string, int] {
 	return &day.Day[[]string, int]{
-		Date: time.Date(2023, 12, 1, 0, 0, 0, 0, time.Local),
+		Year: 2023,
+		Day:  1,
 		Parse: func(r io.Reader) ([]string, error) {
 			b, err := io.ReadAll(r)
 			if err != nil {

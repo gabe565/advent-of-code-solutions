@@ -2,14 +2,14 @@ package day3
 
 import (
 	"io"
-	"time"
 
 	"github.com/gabe565/advent-of-code-solutions/internal/day"
 )
 
 func New() *day.Day[*Schematic, int] {
 	return &day.Day[*Schematic, int]{
-		Date: time.Date(2023, 12, 3, 0, 0, 0, 0, time.Local),
+		Year: 2023,
+		Day:  3,
 		Parse: func(r io.Reader) (*Schematic, error) {
 			var schematic Schematic
 			err := schematic.Decode(r)

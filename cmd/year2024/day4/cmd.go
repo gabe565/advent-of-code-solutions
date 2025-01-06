@@ -3,14 +3,14 @@ package day4
 import (
 	"bytes"
 	"io"
-	"time"
 
 	"github.com/gabe565/advent-of-code-solutions/internal/day"
 )
 
 func New() day.Day[[][]byte, int] {
 	return day.Day[[][]byte, int]{
-		Date: time.Date(2024, 12, 4, 0, 0, 0, 0, time.Local),
+		Year: 2024,
+		Day:  4,
 		Parse: func(r io.Reader) ([][]byte, error) {
 			b, err := io.ReadAll(r)
 			if err != nil {

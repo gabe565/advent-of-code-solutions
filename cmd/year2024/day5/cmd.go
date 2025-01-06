@@ -5,7 +5,6 @@ import (
 	"bytes"
 	"io"
 	"strconv"
-	"time"
 
 	"github.com/gabe565/advent-of-code-solutions/internal/day"
 	"golang.org/x/exp/slices"
@@ -13,7 +12,8 @@ import (
 
 func New() day.Day[*Printer, int] {
 	return day.Day[*Printer, int]{
-		Date: time.Date(2024, 12, 5, 0, 0, 0, 0, time.Local),
+		Year: 2024,
+		Day:  5,
 		Parse: func(r io.Reader) (*Printer, error) {
 			var p Printer
 			scanner := bufio.NewScanner(r)

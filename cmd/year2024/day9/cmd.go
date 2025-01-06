@@ -5,14 +5,14 @@ import (
 	"io"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/gabe565/advent-of-code-solutions/internal/day"
 )
 
 func New() day.Day[Disk, int] {
 	return day.Day[Disk, int]{
-		Date: time.Date(2024, 12, 9, 0, 0, 0, 0, time.Local),
+		Year: 2024,
+		Day:  9,
 		Parse: func(r io.Reader) (Disk, error) {
 			input, err := io.ReadAll(r)
 			if err != nil {
