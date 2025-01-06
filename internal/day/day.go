@@ -3,6 +3,7 @@ package day
 import (
 	"fmt"
 	"io"
+	"log/slog"
 	"os"
 	"time"
 
@@ -71,18 +72,22 @@ func (d Day[In, Out]) run(partFunc PartFunc[In, Out]) func(cmd *cobra.Command, a
 			r = io.NopCloser(cmd.InOrStdin())
 		}
 
+		start := time.Now()
 		input, err := d.Parse(r)
 		if err != nil {
 			return err
 		}
+		slog.Info("Parsed input", "took", time.Since(start))
 		if f, ok := r.(io.Closer); ok {
 			_ = f.Close()
 		}
 
+		start = time.Now()
 		result, err := partFunc(input)
 		if err != nil {
 			return err
 		}
+		slog.Info("Computed result", "took", time.Since(start))
 
 		_, err = fmt.Fprintln(cmd.OutOrStdout(), result)
 		return err
