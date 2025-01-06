@@ -4,10 +4,10 @@ import (
 	"bufio"
 	"bytes"
 	"io"
+	"slices"
 	"strconv"
 
 	"github.com/gabe565/advent-of-code-solutions/internal/day"
-	"golang.org/x/exp/slices"
 )
 
 func New() day.Day[*Printer, int] {
@@ -18,18 +18,15 @@ func New() day.Day[*Printer, int] {
 			var p Printer
 			scanner := bufio.NewScanner(r)
 			ruleSection := true
+			sep := []byte{'|'}
 			for scanner.Scan() {
 				if len(scanner.Bytes()) == 0 {
 					ruleSection = false
+					sep[0] = ','
 					continue
 				}
 
-				sep := []byte{'|'}
-				if !ruleSection {
-					sep = []byte{','}
-				}
-
-				vals := make([]int, 0, bytes.Count(scanner.Bytes(), sep))
+				vals := make([]int, 0, bytes.Count(scanner.Bytes(), sep)+1)
 				for _, val := range bytes.Split(scanner.Bytes(), sep) {
 					parsed, err := strconv.Atoi(string(val))
 					if err != nil {
@@ -48,8 +45,8 @@ func New() day.Day[*Printer, int] {
 		},
 		Part1: func(printer *Printer) (int, error) {
 			var result int
-			for _, update := range printer.Updates {
-				if printer.Valid(update) {
+			for i, update := range printer.Updates {
+				if printer.Valid(i) {
 					result += update[len(update)/2]
 				}
 			}
@@ -57,9 +54,8 @@ func New() day.Day[*Printer, int] {
 		},
 		Part2: func(printer *Printer) (int, error) {
 			var result int
-			for _, update := range printer.Updates {
-				if !printer.Valid(update) {
-					update = printer.Fix(update)
+			for i, update := range printer.Updates {
+				if printer.Fix(i) {
 					result += update[len(update)/2]
 				}
 			}
@@ -73,7 +69,8 @@ type Printer struct {
 	Updates [][]int
 }
 
-func (p *Printer) Valid(update []int) bool {
+func (p *Printer) Valid(i int) bool {
+	update := p.Updates[i]
 	for _, rule := range p.Rules {
 		firstIndex := slices.Index(update, rule[0])
 		if firstIndex == -1 {
@@ -90,24 +87,35 @@ func (p *Printer) Valid(update []int) bool {
 	return true
 }
 
-func (p *Printer) Fix(update []int) []int {
-	var changed bool
+func (p *Printer) Fix(i int) bool {
+	update := p.Updates[i]
+	matching := make([][]int, 0, len(p.Rules))
 	for _, rule := range p.Rules {
-		firstIndex := slices.Index(update, rule[0])
-		if firstIndex == -1 {
-			continue
-		}
-		secondIndex := slices.Index(update, rule[1])
-		if secondIndex == -1 {
-			continue
-		}
-		if firstIndex > secondIndex {
-			changed = true
-			update[firstIndex], update[secondIndex] = update[secondIndex], update[firstIndex]
+		if slices.Contains(update, rule[0]) && slices.Contains(update, rule[1]) {
+			matching = append(matching, rule)
 		}
 	}
-	if changed {
-		update = p.Fix(update)
+
+	var changed bool
+	for {
+		var changedThisRun bool
+		for _, rule := range matching {
+			firstIndex := slices.Index(update, rule[0])
+			if firstIndex == -1 {
+				panic("rule did not match")
+			}
+			secondIndex := slices.Index(update, rule[1])
+			if secondIndex == -1 {
+				panic("rule did not match")
+			}
+			if firstIndex > secondIndex {
+				changed, changedThisRun = true, true
+				update[firstIndex], update[secondIndex] = update[secondIndex], update[firstIndex]
+			}
+		}
+		if !changedThisRun {
+			break
+		}
 	}
-	return update
+	return changed
 }
