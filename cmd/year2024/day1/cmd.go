@@ -3,12 +3,12 @@ package day1
 import (
 	"bufio"
 	"io"
+	"slices"
 	"strconv"
 	"strings"
 
 	"github.com/gabe565/advent-of-code-solutions/internal/day"
 	"github.com/gabe565/advent-of-code-solutions/internal/util"
-	"golang.org/x/exp/slices"
 )
 
 func New() day.Day[[][]int, int] {
