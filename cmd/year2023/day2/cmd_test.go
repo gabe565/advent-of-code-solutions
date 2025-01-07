@@ -1,7 +1,6 @@
 package day2
 
 import (
-	"bytes"
 	_ "embed"
 	"strconv"
 	"strings"
@@ -14,15 +13,9 @@ import (
 )
 
 func TestSolution(t *testing.T) {
-	example, err := inputs.FS.ReadFile("2023/2/example.txt")
-	require.NoError(t, err)
-
-	input, err := inputs.FS.ReadFile("2023/2/input.txt")
-	require.NoError(t, err)
-
 	day := New()
 	type args struct {
-		input []byte
+		input string
 	}
 	tests := []struct {
 		name    string
@@ -31,15 +24,19 @@ func TestSolution(t *testing.T) {
 		want    int
 		wantErr require.ErrorAssertionFunc
 	}{
-		{"example part 1", day.Part1Cmd(), args{example}, 8, require.NoError},
-		{"example part 2", day.Part2Cmd(), args{example}, 2286, require.NoError},
-		{"input part 1", day.Part1Cmd(), args{input}, 2207, require.NoError},
-		{"input part 2", day.Part2Cmd(), args{input}, 62241, require.NoError},
+		{"example part 1", day.Part1Cmd(), args{"2023/2/example.txt"}, 8, require.NoError},
+		{"example part 2", day.Part2Cmd(), args{"2023/2/example.txt"}, 2286, require.NoError},
+		{"input part 1", day.Part1Cmd(), args{"2023/2/input.txt"}, 2207, require.NoError},
+		{"input part 2", day.Part2Cmd(), args{"2023/2/input.txt"}, 62241, require.NoError},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			tt.cmd.SetIn(bytes.NewReader(tt.args.input))
-			var buf bytes.Buffer
+			f, err := inputs.FS.Open(tt.args.input)
+			require.NoError(t, err)
+			t.Cleanup(func() { _ = f.Close() })
+			tt.cmd.SetIn(f)
+
+			var buf strings.Builder
 			tt.cmd.SetOut(&buf)
 
 			tt.wantErr(t, tt.cmd.RunE(tt.cmd, nil))
