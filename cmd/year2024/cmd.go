@@ -2,6 +2,7 @@ package year2024
 
 import (
 	"github.com/gabe565/advent-of-code-solutions/cmd/year2024/day1"
+	"github.com/gabe565/advent-of-code-solutions/cmd/year2024/day10"
 	"github.com/gabe565/advent-of-code-solutions/cmd/year2024/day2"
 	"github.com/gabe565/advent-of-code-solutions/cmd/year2024/day3"
 	"github.com/gabe565/advent-of-code-solutions/cmd/year2024/day4"
@@ -28,6 +29,7 @@ func New() *cobra.Command {
 		day7.New().Cmd(),
 		day8.New().Cmd(),
 		day9.New().Cmd(),
+		day10.New().Cmd(),
 	)
 	return cmd
 }
