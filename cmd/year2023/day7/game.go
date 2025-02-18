@@ -85,7 +85,7 @@ func (r *Round) Hand(wildcard bool) Hand {
 	return best
 }
 
-//go:generate go run github.com/dmarkham/enumer -type Hand
+//go:generate go tool enumer -type Hand
 
 type Hand uint16
 
