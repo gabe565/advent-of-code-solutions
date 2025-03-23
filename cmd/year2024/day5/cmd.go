@@ -27,7 +27,7 @@ func New() day.Day[*Printer, int] {
 				}
 
 				vals := make([]int, 0, bytes.Count(scanner.Bytes(), sep)+1)
-				for _, val := range bytes.Split(scanner.Bytes(), sep) {
+				for val := range bytes.SplitSeq(scanner.Bytes(), sep) {
 					parsed, err := strconv.Atoi(string(val))
 					if err != nil {
 						return nil, err

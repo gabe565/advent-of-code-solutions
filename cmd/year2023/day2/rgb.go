@@ -10,7 +10,7 @@ type RGB struct {
 }
 
 func (r *RGB) UnmarshalText(text []byte) error {
-	for _, colors := range bytes.Split(text, []byte(",")) {
+	for colors := range bytes.SplitSeq(text, []byte(",")) {
 		var color string
 		var number int
 		if _, err := fmt.Fscanf(bytes.NewReader(colors), "%d %s", &number, &color); err != nil {
