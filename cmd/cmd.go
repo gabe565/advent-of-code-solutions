@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"gabe565.com/utils/termx"
+	"github.com/gabe565/advent-of-code-solutions/cmd/year2021"
 	"github.com/gabe565/advent-of-code-solutions/cmd/year2023"
 	"github.com/gabe565/advent-of-code-solutions/cmd/year2024"
 	"github.com/lmittmann/tint"
@@ -24,6 +25,7 @@ func New() *cobra.Command {
 		},
 	}
 	cmd.AddCommand(
+		year2021.New(),
 		year2023.New(),
 		year2024.New(),
 	)
