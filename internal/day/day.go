@@ -25,12 +25,16 @@ type Day[In, Out any] struct {
 func (d Day[In, Out]) Cmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   fmt.Sprintf("%02d", d.Day),
-		Short: "Solutions for day " + strconv.Itoa(d.Day),
+		Short: "Solutions for " + d.DateString(),
 		Args:  cobra.MaximumNArgs(1),
 	}
 	if d.Day < 10 {
 		cmd.Aliases = []string{strconv.Itoa(d.Day)}
 	}
+	cmd.AddGroup(&cobra.Group{
+		ID:    "parts",
+		Title: "Parts",
+	})
 	if d.Part1 != nil {
 		cmd.AddCommand(d.Part1Cmd())
 	}
@@ -40,19 +44,25 @@ func (d Day[In, Out]) Cmd() *cobra.Command {
 	return cmd
 }
 
+func (d Day[In, Out]) DateString() string {
+	return fmt.Sprintf("%04d-12-%02d", d.Year, d.Day)
+}
+
 func (d Day[In, Out]) Part1Cmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "1 [input]",
-		Short: "Solution for part 1",
-		RunE:  d.run(d.Part1),
+		Use:     "1 [input]",
+		Short:   "Solution for " + d.DateString() + " part 1",
+		RunE:    d.run(d.Part1),
+		GroupID: "parts",
 	}
 }
 
 func (d Day[In, Out]) Part2Cmd() *cobra.Command {
 	return &cobra.Command{
-		Use:   "2 [input]",
-		Short: "Solution for part 2",
-		RunE:  d.run(d.Part2),
+		Use:     "2 [input]",
+		Short:   "Solution for " + d.DateString() + " part 2",
+		RunE:    d.run(d.Part2),
+		GroupID: "parts",
 	}
 }
 

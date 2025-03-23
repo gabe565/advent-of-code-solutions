@@ -33,5 +33,12 @@ func New() *cobra.Command {
 		day10.New().Cmd(),
 		day11.New().Cmd(),
 	)
+	cmd.AddGroup(&cobra.Group{
+		ID:    "days",
+		Title: "Days",
+	})
+	for _, cmd := range cmd.Commands() {
+		cmd.GroupID = "days"
+	}
 	return cmd
 }

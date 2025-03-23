@@ -29,5 +29,12 @@ func New() *cobra.Command {
 		year2023.New(),
 		year2024.New(),
 	)
+	cmd.AddGroup(&cobra.Group{
+		ID:    "years",
+		Title: "Years",
+	})
+	for _, cmd := range cmd.Commands() {
+		cmd.GroupID = "years"
+	}
 	return cmd
 }
