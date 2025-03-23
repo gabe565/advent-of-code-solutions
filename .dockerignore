@@ -1,0 +1,12 @@
+.dockerignore
+.github
+.gitignore
+.golangci.yaml
+.idea
+.pre-commit-config.yaml
+.sops.yaml
+Dockerfile
+README.md
+advent-of-code-solutions
+hack
+inputs
