@@ -15,8 +15,7 @@ import (
 func TestSolution(t *testing.T) {
 	day := New()
 	type args struct {
-		input   string
-		spelled bool
+		input string
 	}
 	tests := []struct {
 		name    string
@@ -25,10 +24,10 @@ func TestSolution(t *testing.T) {
 		want    int
 		wantErr require.ErrorAssertionFunc
 	}{
-		{"example part 1", day.Part1Cmd(), args{"2023/1/example_p1.txt", false}, 142, require.NoError},
-		{"example part 2", day.Part2Cmd(), args{"2023/1/example_p2.txt", true}, 281, require.NoError},
-		{"input part 1", day.Part1Cmd(), args{"2023/1/input.txt", false}, 54990, require.NoError},
-		{"input part 2", day.Part2Cmd(), args{"2023/1/input.txt", false}, 54473, require.NoError},
+		{"example part 1", day.Part1Cmd(), args{"2023/1/example_p1.txt"}, 142, require.NoError},
+		{"example part 2", day.Part2Cmd(), args{"2023/1/example_p2.txt"}, 281, require.NoError},
+		{"input part 1", day.Part1Cmd(), args{"2023/1/input.txt"}, 54990, require.NoError},
+		{"input part 2", day.Part2Cmd(), args{"2023/1/input.txt"}, 54473, require.NoError},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
