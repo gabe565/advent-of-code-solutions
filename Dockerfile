@@ -17,7 +17,7 @@ RUN --mount=type=cache,target=/root/.cache \
   CGO_ENABLED=0 xx-go build -ldflags='-w -s' -trimpath
 
 
-FROM alpine:3.21
+FROM alpine:3.24
 WORKDIR /
 COPY --from=build /app/advent-of-code-solutions /
 ENTRYPOINT ["/advent-of-code-solutions"]
