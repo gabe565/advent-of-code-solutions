@@ -28,7 +28,7 @@ jobs:
         with:
           go-version-file: go.mod
       - name: Sops Binary Installer
-        uses: mdgreenwald/mozilla-sops-action@v1.6.0
+        uses: mdgreenwald/mozilla-sops-action@55177c1ff20a2b396280e4c5f53c32b69f0c1e40 # v2.1.1
       - name: Decrypt inputs
         env:
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
