@@ -33,7 +33,7 @@ type Diagnostic struct {
 
 func (d *Diagnostic) Write(p []byte) (int, error) {
 	var n int
-	for _, line := range bytes.Fields(p) {
+	for line := range bytes.FieldsSeq(p) {
 		if len(line) == 0 {
 			continue
 		}

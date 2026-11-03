@@ -3,6 +3,7 @@ package day9
 import (
 	"bytes"
 	"io"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -81,9 +82,9 @@ func (d Disk) Compact() Disk {
 		blockEnd   int
 	)
 	// Find first block
-	for i := len(d) - 1; i >= 0; i-- {
-		if d[i] != nil {
-			blockID = *d[i]
+	for i, v := range slices.Backward(d) {
+		if v != nil {
+			blockID = *v
 			blockStart, blockEnd = i, i
 			break
 		}
