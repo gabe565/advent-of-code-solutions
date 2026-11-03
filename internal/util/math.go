@@ -1,6 +1,7 @@
 package util
 
 import (
+	"cmp"
 	"errors"
 
 	"golang.org/x/exp/constraints"
@@ -51,4 +52,9 @@ func Pow[T constraints.Integer](x, y T) T {
 		x *= x
 	}
 	return result
+}
+
+// Sign returns the sign of the input, either -1, 0, or +1.
+func Sign[T constraints.Signed | constraints.Float](n T) T {
+	return T(cmp.Compare(n, 0))
 }
