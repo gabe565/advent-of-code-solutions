@@ -55,10 +55,7 @@ func New() day.Day[*Map, int] {
 		},
 		Part2: func(m *Map) (int, error) {
 			var result int
-			for {
-				if !m.Guard.Pos.In(m.Rect) {
-					break
-				}
+			for m.Guard.Pos.In(m.Rect) {
 				nextPos := m.Guard.NextPos()
 				if !nextPos.In(m.Rect) {
 					break

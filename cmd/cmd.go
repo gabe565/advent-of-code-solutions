@@ -17,11 +17,14 @@ func New() *cobra.Command {
 		Use:   "advent-of-code-solutions",
 		Short: "Advent Of Code Solutions by gabe565",
 		PersistentPreRun: func(cmd *cobra.Command, _ []string) {
-			slog.SetDefault(slog.New(tint.NewHandler(cmd.ErrOrStderr(), &tint.Options{
-				Level:      slog.LevelInfo,
-				TimeFormat: time.TimeOnly,
-				NoColor:    !termx.IsColor(cmd.ErrOrStderr()),
-			})))
+			slog.SetDefault(slog.New(tint.NewTextHandler(
+				cmd.ErrOrStderr(),
+				&tint.Options{
+					Level:      slog.LevelInfo,
+					TimeFormat: time.TimeOnly,
+					NoColor:    !termx.IsColor(cmd.ErrOrStderr()),
+				},
+			)))
 		},
 	}
 	cmd.AddCommand(

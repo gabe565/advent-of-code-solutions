@@ -6,6 +6,7 @@ import (
 	"io"
 	"log/slog"
 	"strconv"
+	"strings"
 )
 
 type Bingo struct {
@@ -67,16 +68,16 @@ func (bingo *Bingo) ReadFrom(r io.Reader) (int64, error) {
 }
 
 func (bingo Bingo) String() string {
-	var result string
-	result += bingo.Order.String()
-	result += "\n\n"
+	var result strings.Builder
+	result.WriteString(bingo.Order.String())
+	result.WriteString("\n\n")
 	for i, board := range bingo.Boards {
-		result += board.String()
+		result.WriteString(board.String())
 		if i < len(bingo.Boards)-1 {
-			result += "\n\n"
+			result.WriteString("\n\n")
 		}
 	}
-	return result
+	return result.String()
 }
 
 func (bingo *Bingo) Draw() bool {

@@ -3,6 +3,7 @@ package day4
 import (
 	"bytes"
 	"strconv"
+	"strings"
 )
 
 type Board [][]Cell
@@ -29,16 +30,16 @@ func (board *Board) Write(p []byte) (int, error) {
 }
 
 func (board Board) String() string {
-	var result string
+	var result strings.Builder
 	for i, row := range board {
 		for _, cell := range row {
-			result += cell.String()
+			result.WriteString(cell.String())
 		}
 		if i < len(board)-1 {
-			result += "\n"
+			result.WriteString("\n")
 		}
 	}
-	return result
+	return result.String()
 }
 
 func (board Board) Wins() bool {

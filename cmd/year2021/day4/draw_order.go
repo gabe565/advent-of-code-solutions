@@ -3,6 +3,7 @@ package day4
 import (
 	"bytes"
 	"strconv"
+	"strings"
 )
 
 type Order []int
@@ -24,12 +25,12 @@ func (order *Order) Write(p []byte) (int, error) {
 }
 
 func (order Order) String() string {
-	var result string
+	var result strings.Builder
 	for i, v := range order {
-		result += strconv.Itoa(v)
+		result.WriteString(strconv.Itoa(v))
 		if i < len(order)-1 {
-			result += ","
+			result.WriteString(",")
 		}
 	}
-	return result
+	return result.String()
 }
