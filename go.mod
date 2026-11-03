@@ -7,7 +7,7 @@ require (
 	github.com/lmittmann/tint v1.2.1
 	github.com/spf13/cobra v1.9.1
 	github.com/stretchr/testify v1.12.1
-	golang.org/x/exp v0.0.0-20250305212735-054e65f0b394
+	golang.org/x/exp v0.0.0-20261014143641-f0251eb4aa3e
 )
 
 require (
@@ -17,10 +17,10 @@ require (
 	github.com/pascaldekloe/name v1.0.1 // indirect
 	github.com/spf13/pflag v1.0.6 // indirect
 	go.yaml.in/yaml/v3 v3.0.5 // indirect
-	golang.org/x/mod v0.24.0 // indirect
-	golang.org/x/sync v0.12.0 // indirect
-	golang.org/x/sys v0.31.0 // indirect
-	golang.org/x/tools v0.31.0 // indirect
+	golang.org/x/mod v0.42.0 // indirect
+	golang.org/x/sync v0.24.0 // indirect
+	golang.org/x/sys v0.49.0 // indirect
+	golang.org/x/tools v0.52.0 // indirect
 )
 
 tool github.com/dmarkham/enumer
