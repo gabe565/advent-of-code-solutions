@@ -36,19 +36,22 @@ func _HandNoOp() {
 var _HandValues = []Hand{HighCard, OnePair, TwoPair, ThreeOfAKind, FullHouse, FourOfAKind, FiveOfAKind}
 
 var _HandNameToValueMap = map[string]Hand{
-	_HandName[0:8]:        HighCard,
+	_HandName[0:8]:   HighCard,
+	_HandName[8:15]:  OnePair,
+	_HandName[15:22]: TwoPair,
+	_HandName[22:34]: ThreeOfAKind,
+	_HandName[34:43]: FullHouse,
+	_HandName[43:54]: FourOfAKind,
+	_HandName[54:65]: FiveOfAKind,
+}
+
+var _HandLowerNameToValueMap = map[string]Hand{
 	_HandLowerName[0:8]:   HighCard,
-	_HandName[8:15]:       OnePair,
 	_HandLowerName[8:15]:  OnePair,
-	_HandName[15:22]:      TwoPair,
 	_HandLowerName[15:22]: TwoPair,
-	_HandName[22:34]:      ThreeOfAKind,
 	_HandLowerName[22:34]: ThreeOfAKind,
-	_HandName[34:43]:      FullHouse,
 	_HandLowerName[34:43]: FullHouse,
-	_HandName[43:54]:      FourOfAKind,
 	_HandLowerName[43:54]: FourOfAKind,
-	_HandName[54:65]:      FiveOfAKind,
 	_HandLowerName[54:65]: FiveOfAKind,
 }
 
@@ -69,7 +72,7 @@ func HandString(s string) (Hand, error) {
 		return val, nil
 	}
 
-	if val, ok := _HandNameToValueMap[strings.ToLower(s)]; ok {
+	if val, ok := _HandLowerNameToValueMap[strings.ToLower(s)]; ok {
 		return val, nil
 	}
 	return 0, fmt.Errorf("%s does not belong to Hand values", s)
