@@ -149,10 +149,8 @@ func (d Disk) String() string {
 		switch {
 		case b == nil:
 			s.WriteByte('.')
-		case *b < 10:
-			s.WriteByte(byte(*b) + '0')
-		case *b < 16:
-			s.WriteByte(byte(*b-10) + 'a')
+		case *b < 36:
+			s.WriteString(strconv.FormatInt(int64(*b), 36))
 		default:
 			s.WriteByte('?')
 		}
