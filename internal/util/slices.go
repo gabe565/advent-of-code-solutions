@@ -25,9 +25,9 @@ func Multiply[S ~[]E, E constraints.Integer | constraints.Float](s S) E {
 }
 
 func StringToIntSlice(s string, sep string) ([]int, error) {
-	split := strings.Split(s, sep)
-	result := make([]int, 0, len(split))
-	for _, v := range split {
+	s = strings.TrimSpace(s)
+	result := make([]int, 0, strings.Count(s, sep)+1)
+	for v := range strings.SplitSeq(s, sep) {
 		if v != "" {
 			v, err := strconv.Atoi(v)
 			if err != nil {
