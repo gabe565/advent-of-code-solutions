@@ -68,6 +68,8 @@ func (d Day[In, Out]) Part2Cmd() *cobra.Command {
 
 func (d Day[In, Out]) run(partFunc PartFunc[In, Out]) func(cmd *cobra.Command, args []string) error {
 	return func(cmd *cobra.Command, args []string) error {
+		cmd.SilenceUsage = true
+
 		var r io.Reader
 		switch {
 		case len(args) == 1:
