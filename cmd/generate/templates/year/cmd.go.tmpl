@@ -1,0 +1,24 @@
+package year{{ .Year }}
+
+import (
+	"github.com/gabe565/advent-of-code-solutions/cmd/year{{ .Year }}/day{{ .Day }}"
+	"github.com/spf13/cobra"
+)
+
+func New() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "{{ .Year }}",
+		Short: "Solutions for {{ .Year }}",
+	}
+	cmd.AddCommand(
+		day{{ .Day }}.New().Cmd(),
+	)
+	cmd.AddGroup(&cobra.Group{
+		ID:    "days",
+		Title: "Days",
+	})
+	for _, cmd := range cmd.Commands() {
+		cmd.GroupID = "days"
+	}
+	return cmd
+}
